@@ -1,0 +1,28 @@
+.search-bar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  .search-input-paper {
+    display: flex;
+    flex-direction: row;
+    margin: 1em 0;
+
+    .MuiInputBase-root {
+      margin-left: 12px;
+      padding: 10.5px 0;
+
+      .MuiInputBase-input {
+        padding: 0;
+      }
+    }
+
+    .icon-button {
+      padding-right: 9px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+  }
+}
