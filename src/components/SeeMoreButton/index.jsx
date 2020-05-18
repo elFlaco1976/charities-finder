@@ -1,5 +1,4 @@
 import React from 'react';
-/* import { Button } from 'reactstrap'; */
 import Button from '@material-ui/core/Button';
 import './styles.scss';
 

@@ -1,12 +1,9 @@
 import React from 'react';
-//import { Input, Button } from 'reactstrap';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Search from '@material-ui/icons/Search';
-import CountrySelection from '../CountrySelection';
-import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
+import CountrySelection from '../CountrySelection';
 import './styles.scss';
 
 const SearchBar = ({
@@ -42,8 +39,6 @@ const SearchBar = ({
         </IconButton>
       </Paper>
       <CountrySelection
-        handleCountryToggle={handleCountryToggle}
-        countryDropdownOpen={countryDropdownOpen}
         currentCountry={filterValues.country}
         handleCountryChange={handleCountryChange}
       />
