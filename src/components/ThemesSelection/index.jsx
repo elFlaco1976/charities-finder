@@ -16,7 +16,12 @@ const ThemesSelection = ({ allThemes, handleThemesChange }) => {
         filterSelectedOptions
         className="themes-selection-container"
         renderInput={(params) => (
-          <TextField {...params} variant="outlined" className="text-field" />
+          <TextField
+            {...params}
+            placeholder="Search by themes"
+            variant="outlined"
+            className="text-field"
+          />
         )}
         onChange={(event, values) => {
           handleThemesChange(values);

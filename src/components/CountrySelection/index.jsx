@@ -19,7 +19,7 @@ const CountrySelection = ({ currentCountry, handleCountryChange }) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder="Choose a country"
+            placeholder="Search by country"
             variant="outlined"
             inputProps={{
               ...params.inputProps,

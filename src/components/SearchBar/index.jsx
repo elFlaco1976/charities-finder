@@ -29,7 +29,7 @@ const SearchBar = ({
           variant="outlined"
           size="small"
           style={{ width: '100%' }}
-          placeholder="Search by a keyword"
+          placeholder="Search by keywords"
           onKeyPress={(e) => {
             if (e.charCode === 13) handleEnterForSearchInput();
           }}
