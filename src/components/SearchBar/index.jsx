@@ -4,6 +4,7 @@ import Search from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
 import CountrySelection from '../CountrySelection';
+import ThemesSelection from '../ThemesSelection';
 import './styles.scss';
 
 const SearchBar = ({
@@ -15,6 +16,8 @@ const SearchBar = ({
   filterValues,
   handleCountryChange,
   handleEnterForSearchInput,
+  handleThemesChange,
+  allThemes,
 }) => {
   return (
     <div className="search-bar-container">
@@ -26,6 +29,7 @@ const SearchBar = ({
           variant="outlined"
           size="small"
           style={{ width: '100%' }}
+          placeholder="Search by a keyword"
           onKeyPress={(e) => {
             if (e.charCode === 13) handleEnterForSearchInput();
           }}
@@ -41,6 +45,10 @@ const SearchBar = ({
       <CountrySelection
         currentCountry={filterValues.country}
         handleCountryChange={handleCountryChange}
+      />
+      <ThemesSelection
+        allThemes={allThemes}
+        handleThemesChange={handleThemesChange}
       />
     </div>
   );

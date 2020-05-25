@@ -54,6 +54,29 @@ export const requestThemes = async (handleResponse, handleError) => {
 const getFilterParameters = (filterValues) => {
   const country =
     filterValues.country !== null ? `country:${filterValues.country.code}` : '';
-  const filterParameters = country !== '' ? `&filter=${country}` : '';
-  return filterParameters;
+  const themes = getThemesForFilterParameters(filterValues.themes);
+  if (country !== '' || themes !== '') {
+    let test = `&filter=${country}${
+      country !== '' && themes !== '' ? ',' : ''
+    }${themes}`;
+    console.log('getFilterParameters final paramter:', test);
+    return `&filter=${country}${
+      country !== '' && themes !== '' ? ',' : ''
+    }${themes}`;
+  }
+  return '';
+
+  /*   const filterParameters = country !== '' ? `&filter=${country}` : '';
+  return filterParameters; */
+};
+
+const getThemesForFilterParameters = (themes) => {
+  let result = '';
+  if (themes !== null) {
+    themes.forEach((element) => {
+      result += `theme:${element.id},`;
+    });
+    result = result.slice(0, -1);
+  }
+  return result;
 };

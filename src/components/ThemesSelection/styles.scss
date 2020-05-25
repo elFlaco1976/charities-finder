@@ -1,0 +1,16 @@
+.themes-selection-container {
+  margin-top: 1em;
+
+  .text-field {
+    width: 100%;
+  }
+
+  .MuiAutocomplete-endAdornment {
+    top: 0;
+    right: 0;
+
+    .MuiAutocomplete-popupIndicator {
+      padding: 0;
+    }
+  }
+}

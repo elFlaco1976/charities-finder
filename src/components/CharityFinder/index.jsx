@@ -11,7 +11,7 @@ class CharityFinder extends React.Component {
       projects: [],
       isSearchResultEmpty: false,
       searchText: '',
-      themes: [],
+      allThemes: [],
       filterValues: {
         country: null,
         themes: [],
@@ -30,7 +30,7 @@ class CharityFinder extends React.Component {
   };
 
   handleResponseThemes = (data) => {
-    this.setState({ themes: data });
+    this.setState({ allThemes: data });
   };
 
   handleErrorRequestProjectSearch = (error) => {
@@ -95,11 +95,36 @@ class CharityFinder extends React.Component {
     );
   };
 
+  handleThemesChange = (themes) => {
+    console.log('themes selected:' + themes);
+    this.currentPage = 0;
+    this.setState(
+      (prevState) => {
+        return {
+          filterValues: {
+            ...prevState.filterValues,
+            themes: themes,
+          },
+        };
+      },
+      () => {
+        requestSearchProjects(
+          this.handleResponseRequestProjectSearch,
+          this.handleErrorRequestProjectSearch,
+          this.state.searchText,
+          this.currentPage,
+          this.state.filterValues
+        );
+      }
+    );
+  };
+
   loadResultsPage = (data) => {
     const { projects } = this.state;
-    const allProjects = [...projects, ...data];
+    const newProjects =
+      this.currentPage === 0 ? [...data] : [...projects, ...data];
     this.setState({
-      projects: allProjects,
+      projects: newProjects,
       isSearchResultEmpty: data.length === 0,
     });
   };
@@ -115,6 +140,7 @@ class CharityFinder extends React.Component {
       searchText,
       isSearchResultEmpty,
       filterValues,
+      allThemes,
     } = this.state;
     return (
       <>
@@ -125,6 +151,8 @@ class CharityFinder extends React.Component {
           filterValues={filterValues}
           handleCountryChange={this.handleCountryChange}
           handleEnterForSearchInput={this.handleEnterForSearchInput}
+          allThemes={allThemes}
+          handleThemesChange={this.handleThemesChange}
         />
         <ProjectsList
           projects={projects}
