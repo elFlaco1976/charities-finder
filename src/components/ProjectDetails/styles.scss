@@ -1,0 +1,47 @@
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paper {
+  background-color: grey;
+  border: 2px solid #000;
+  /*   boxShadow: theme.shadows[5];
+  padding: theme.spacing(2, 4, 3); */
+}
+
+.modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+  height: 100%;
+  position: 'absolute';
+  top: 10%;
+  left: 10%;
+}
+
+.modal-paper {
+  background-color: white;
+  padding: 50px;
+}
+img {
+  max-width: 100%;
+  margin: 2em auto;
+  display: block;
+}
+
+.project-title {
+  text-align: center;
+  margin: 1em 0;
+  font-weight: normal;
+}
+
+.content-subtitle {
+  font-weight: normal;
+}
+
+.container-main {
+  margin: 0 2em;
+}

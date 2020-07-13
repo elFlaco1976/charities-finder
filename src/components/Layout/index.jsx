@@ -12,7 +12,7 @@ import './bootstrap.min.css';
 import './reset.css';
 import './styles.scss';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, isMainPage }) => {
   return (
     <StaticQuery
       query={graphql`
@@ -26,10 +26,14 @@ const Layout = ({ children }) => {
       `}
       render={(data) => (
         <div>
-          <header>
+          <header className={isMainPage ? 'header-main' : 'header-details'}>
             <h1>Time to help</h1>
-            <p>Find inspiring projects,</p>
-            <p>support them</p>
+            {isMainPage && (
+              <>
+                <p>Find inspiring projects,</p>
+                <p>support them</p>
+              </>
+            )}
           </header>
           <div className="body-layout">{children}</div>
         </div>
