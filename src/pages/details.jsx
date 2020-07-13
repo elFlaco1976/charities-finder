@@ -8,7 +8,9 @@ import Fade from '@material-ui/core/Fade';
 import './stylesDetails.scss';
 
 export default function Details({ location }) {
-  return <ProjectDetails project={location.state.project} />;
+  const { state = {} } = location
+  const { project } = state
+  return <ProjectDetails project={project} />;
 }
 
 /* const Details = () => {
