@@ -4,7 +4,7 @@
   margin: 0 auto;
 }
 
-header {
+.header-main {
   padding-top: 7em;
   padding-bottom: 2em;
   text-align: center;
@@ -29,6 +29,25 @@ header {
 
     p {
       font-size: 1.68rem;
+    }
+  }
+}
+
+.header-details {
+  padding-top: 2em;
+  padding-bottom: 1em;
+  text-align: center;
+  background-color: white;
+
+  h1 {
+    font-size: 2.89rem;
+    color: black;
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 600px) {
+    h1 {
+      font-size: 2.89rem;
     }
   }
 }

@@ -12,16 +12,43 @@ class CharityFinder extends React.Component {
       isSearchResultEmpty: false,
       searchText: '',
       allThemes: [],
+      searchCountry: null,
+      searchThemes: [],
       filterValues: {
         country: null,
         themes: [],
       },
+      projectDetailsModalOpen: false,
+      projectDetailsId: null,
     };
     this.projectsPage = [];
     this.currentPage = 0;
   }
 
   componentDidMount() {
+    let persistentStateProjects = sessionStorage.getItem('projects');
+    let persistentStateSearchText = sessionStorage.getItem('searchText');
+    let persistentStateSearchCountry = sessionStorage.getItem('searchCountry');
+    let persistentStateSearchThemes = sessionStorage.getItem('searchThemes');
+    if (
+      persistentStateProjects ||
+      persistentStateSearchText ||
+      persistentStateSearchCountry ||
+      persistentStateSearchThemes
+    ) {
+      const { projects, searchText, searchCountry, searchThemes } = this.state;
+      persistentStateProjects = JSON.parse(persistentStateProjects);
+      persistentStateSearchText = JSON.parse(persistentStateSearchText);
+      persistentStateSearchCountry = JSON.parse(persistentStateSearchCountry);
+      persistentStateSearchThemes = JSON.parse(persistentStateSearchThemes);
+      this.setState({
+        projects: persistentStateProjects || projects,
+        searchText: persistentStateSearchText || searchText,
+        searchCountry: persistentStateSearchCountry || searchCountry,
+        searchThemes: persistentStateSearchThemes || searchThemes,
+      });
+    }
+
     requestThemes(this.handleResponseThemes);
   }
 
@@ -46,7 +73,9 @@ class CharityFinder extends React.Component {
   };
 
   handleSearchButton = () => {
+    const { searchText } = this.state;
     this.sendSearchRequest();
+    sessionStorage.setItem('searchText', JSON.stringify(searchText));
   };
 
   sendSearchRequest = () => {
@@ -57,7 +86,12 @@ class CharityFinder extends React.Component {
       this.handleErrorRequestProjectSearch,
       searchText,
       this.currentPage,
-      filterValues
+      filterValues,
+      {
+        searchText: this.state.searchText,
+        searchCountry: this.state.searchCountry,
+        searchThemes: this.state.searchThemes,
+      }
     );
   };
 
@@ -69,54 +103,38 @@ class CharityFinder extends React.Component {
       this.handleErrorRequestProjectSearch,
       searchText,
       this.currentPage,
-      filterValues
+      filterValues,
+      {
+        searchText: this.state.searchText,
+        searchCountry: this.state.searchCountry,
+        searchThemes: this.state.searchThemes,
+      }
     );
   };
 
   handleCountryChange = (country) => {
-    this.currentPage = 0;
-    this.setState(
-      (prevState) => {
-        return {
-          filterValues: {
-            ...prevState.filterValues,
-            country,
-          },
-        };
-      },
-      () =>
-        requestSearchProjects(
-          this.handleResponseRequestProjectSearch,
-          this.handleErrorRequestProjectSearch,
-          this.state.searchText,
-          this.currentPage,
-          this.state.filterValues
-        )
-    );
+    this.setState({ searchCountry: country }, () => {
+      this.sendSearchRequest();
+    });
+    sessionStorage.setItem('searchCountry', JSON.stringify(country));
   };
 
   handleThemesChange = (themes) => {
-    console.log('themes selected:' + themes);
-    this.currentPage = 0;
-    this.setState(
-      (prevState) => {
-        return {
-          filterValues: {
-            ...prevState.filterValues,
-            themes: themes,
-          },
-        };
-      },
-      () => {
-        requestSearchProjects(
-          this.handleResponseRequestProjectSearch,
-          this.handleErrorRequestProjectSearch,
-          this.state.searchText,
-          this.currentPage,
-          this.state.filterValues
-        );
-      }
-    );
+    this.setState({ searchThemes: themes }, () => {
+      this.sendSearchRequest();
+    });
+    sessionStorage.setItem('searchThemes', JSON.stringify(themes));
+  };
+
+  handleProjectDetailsModalOpen = (projectId) => {
+    this.setState({
+      projectDetailsModalOpen: true,
+      projectDetailsId: projectId,
+    });
+  };
+
+  handleProjectDetailsModalClose = () => {
+    this.setState({ projectDetailsModalOpen: false, projectDetailsId: null });
   };
 
   loadResultsPage = (data) => {
@@ -127,6 +145,7 @@ class CharityFinder extends React.Component {
       projects: newProjects,
       isSearchResultEmpty: data.length === 0,
     });
+    sessionStorage.setItem('projects', JSON.stringify(newProjects));
   };
 
   isSeeMoreButtonVisible = () => {
@@ -141,6 +160,10 @@ class CharityFinder extends React.Component {
       isSearchResultEmpty,
       filterValues,
       allThemes,
+      projectDetailsModalOpen,
+      searchCountry,
+      searchThemes,
+      areStateValuesFromSavedSession,
     } = this.state;
     return (
       <>
@@ -153,10 +176,15 @@ class CharityFinder extends React.Component {
           handleEnterForSearchInput={this.handleEnterForSearchInput}
           allThemes={allThemes}
           handleThemesChange={this.handleThemesChange}
+          searchCountry={searchCountry}
+          searchThemes={searchThemes}
         />
         <ProjectsList
           projects={projects}
           isSearchResultEmpty={isSearchResultEmpty}
+          handleProjectDetailsModalOpen={this.handleProjectDetailsModalOpen}
+          handleProjectDetailsModalClose={this.handleProjectDetailsModalClose}
+          projectDetailsModalOpen={projectDetailsModalOpen}
         />
         {this.isSeeMoreButtonVisible() && (
           <SeeMoreButton handleSeeMoreButton={this.handleSeeMoreButton} />

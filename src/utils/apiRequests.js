@@ -23,6 +23,33 @@ export const requestSearchProjects = async (
   handleError,
   query,
   currentPage,
+  filterValues,
+  searchValues
+) => {
+  const paginationValue = currentPage * resultsPerPage;
+  //const queryString = query !== '' ? query : '*';
+  const queryString =
+    searchValues.searchText === '' ? '*' : searchValues.searchText;
+  const filterParameters = getFilterParameters(searchValues);
+  const url = `${urlApi}/${endPointSearchProjects}?${apiKey}&q=${queryString}&start=${paginationValue}${filterParameters}`;
+  try {
+    const response = await axios.get(url);
+    const projects =
+      response.data.search.response.projects !== undefined
+        ? response.data.search.response.projects.project
+        : [];
+    console.log('Projects:', projects);
+    handleResponse(projects);
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+/* export const requestSearchProjects = async (
+  handleResponse,
+  handleError,
+  query,
+  currentPage,
   filterValues
 ) => {
   const paginationValue = currentPage * resultsPerPage;
@@ -35,11 +62,12 @@ export const requestSearchProjects = async (
       response.data.search.response.projects !== undefined
         ? response.data.search.response.projects.project
         : [];
+    console.log('Projects:', projects);
     handleResponse(projects);
   } catch (error) {
     handleError(error);
   }
-};
+}; */
 
 export const requestThemes = async (handleResponse, handleError) => {
   const url = `${urlApi}/${endPointThemes}?${apiKey}`;
@@ -53,13 +81,14 @@ export const requestThemes = async (handleResponse, handleError) => {
 
 const getFilterParameters = (filterValues) => {
   const country =
-    filterValues.country !== null ? `country:${filterValues.country.code}` : '';
-  const themes = getThemesForFilterParameters(filterValues.themes);
+    filterValues.searchCountry !== null
+      ? `country:${filterValues.searchCountry.code}`
+      : '';
+  const themes = getThemesForFilterParameters(filterValues.searchThemes);
   if (country !== '' || themes !== '') {
     let test = `&filter=${country}${
       country !== '' && themes !== '' ? ',' : ''
     }${themes}`;
-    console.log('getFilterParameters final paramter:', test);
     return `&filter=${country}${
       country !== '' && themes !== '' ? ',' : ''
     }${themes}`;

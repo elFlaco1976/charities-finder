@@ -18,6 +18,8 @@ const SearchBar = ({
   handleEnterForSearchInput,
   handleThemesChange,
   allThemes,
+  searchCountry,
+  searchThemes
 }) => {
   return (
     <div className="search-bar-container">
@@ -43,12 +45,13 @@ const SearchBar = ({
         </IconButton>
       </Paper>
       <CountrySelection
-        currentCountry={filterValues.country}
+        currentCountry={searchCountry}
         handleCountryChange={handleCountryChange}
       />
       <ThemesSelection
         allThemes={allThemes}
         handleThemesChange={handleThemesChange}
+        searchThemes={searchThemes}
       />
     </div>
   );

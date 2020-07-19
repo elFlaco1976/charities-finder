@@ -4,15 +4,16 @@ import TextField from '@material-ui/core/TextField';
 import { StylesProvider } from '@material-ui/core/styles';
 import './styles.scss';
 
-const ThemesSelection = ({ allThemes, handleThemesChange }) => {
+const ThemesSelection = ({ allThemes, handleThemesChange, searchThemes }) => {
   return (
     <StylesProvider injectFirst>
       <Autocomplete
+        value={searchThemes}
         multiple
         options={allThemes}
         size="small"
         getOptionLabel={(option) => option.name}
-        defaultValue={null}
+        defaultValue={searchThemes}
         filterSelectedOptions
         className="themes-selection-container"
         renderInput={(params) => (
