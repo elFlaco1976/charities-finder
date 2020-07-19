@@ -10,7 +10,8 @@ import './stylesDetails.scss';
 export default function Details({ location }) {
   const { state = {} } = location
   const { project } = state
-  return <ProjectDetails project={project} />;
+  /* return <ProjectDetails project={project} />; */
+return ( <div>{project.title}</div> )
 }
 
 /* const Details = () => {
