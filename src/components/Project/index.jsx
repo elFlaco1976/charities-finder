@@ -11,6 +11,7 @@ const Project = ({
   handleProjectDetailsModalClose,
   projectDetailsModalOpen,
 }) => {
+  const { title, image, summary, need, longTermImpact } = project
   return (
     <Card key={index} className="card-list-item">
       {/*       <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
@@ -40,8 +41,10 @@ const Project = ({
       /> */}
       <Link
         to={`/details`}
-        state={{ project }}
-        
+        /* state={{ project }} */
+        //const { title, image = {}, summary, need, longTermImpact } = project
+        state={{ title, summary, need, longTermImpact, imageUrl: image.imagelink[3].url }}
+
         target="_blank"
         rel="noopener noreferrer"
       >

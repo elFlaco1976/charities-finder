@@ -7,11 +7,11 @@ import Fade from '@material-ui/core/Fade';
 import './styles.scss';
 
 export default function ProjectDetails({ project }) {
-  const { title, image, summary, need, longTermImpact } = project
+  const { title, imageUrl, summary, need, longTermImpact } = project
   return (
     <Layout isMainPage={false}>
       <h2 className="project-title">{title}</h2>
-      <img src={image.imagelink[3].url} alt="" />
+      <img src={imageUrl} alt="" />
       <main className="container-main">
         <p>{summary}</p>
         <h3 className="content-subtitle">The need</h3>
