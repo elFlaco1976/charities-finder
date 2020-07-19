@@ -40,7 +40,8 @@ const Project = ({
       /> */}
       <Link
         to={`/details`}
-        state={{ project }}
+        /* state={{ project }} */
+        state={{ test: true }}
         target="_blank"
         rel="noopener noreferrer"
       >
